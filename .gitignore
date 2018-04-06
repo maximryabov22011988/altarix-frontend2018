@@ -5,6 +5,9 @@
 *.pdf
 *.psd
 *.sublime*
+gulpfile.js
+package.json
+package-lock.json
 materials/
 node_modules/
 npm-debug.*
