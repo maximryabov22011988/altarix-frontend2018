@@ -1,0 +1,214 @@
+@import url("common.css");
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    margin: 0 0 30px 0;
+    overflow: hidden;
+}
+
+.logo {
+    position: relative;
+    width: 90px;
+    height: 30px;
+    margin-left: 80px;
+}
+
+.logo:before {
+    content: "";
+    position: absolute;
+    left: -60px;
+    top: -10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 60%;
+}
+
+.list {
+    width: 24%;
+    height: 50px;
+    margin-left: 1%;
+    margin-bottom: 1%;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.m-text {
+    width: 50%;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.5em;
+}
+
+.m-text-title {
+    font-size: 28px;
+}
+
+.m-image {
+    display: block;
+    width: 40%;
+    min-height: 360px;
+}
+
+.content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 40px 0 0;
+}
+
+.c-block, .c-article, .c-comment {
+    width: 30%;
+}
+
+
+.b-list {
+    min-height: 200px;
+    margin: 0 0 30px 0;
+}
+
+.c-article {
+    margin: 0 0 0 4%;
+    font-size: 14px;
+}
+
+.a-list {
+    margin: 0 0 30px 0;
+    line-height: 1.5em;
+}
+
+.c-comment {
+    margin: 0 0 0 4%;
+    font-size: 14px;
+}
+
+.c-list {
+    display: flex;
+    margin: 0 0 30px 0;
+    line-height: 1.5em;
+    overflow: hidden;
+}
+
+.ava {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+}
+
+.text {
+    margin-left: 20px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 800px) {
+
+    .c-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: 0 0 30px 0;
+        overflow: hidden;
+    }
+
+    .b-list {
+        flex-grow: 1;
+        flex-shrink: 0;
+        width: 32%;
+        margin: 0 0 0 2%;
+    }
+
+    .b-list:first-child {
+        margin: 0;
+    }
+
+    .c-article {
+        width: 48%;
+        margin: 0;
+    }
+
+    .c-comment {
+        width: 48%;
+        margin: 0 0 0 4%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .logo {
+        display: block;
+    }
+
+    .item {
+        width: 100%;
+        margin: 30px 0 0;
+    }
+
+    .list {
+        margin: 0 1% 1% 0;
+    }
+
+    .m-text {
+        width: 100%;
+        margin: 0 0 40px 0;
+    }
+
+    .m-image {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .c-block {
+        width: 100%;
+        margin: 0 0 30px 0;
+    }
+
+    .b-list {
+        margin: 0 0 30px 0;
+    }
+
+    .b-list:last-child {
+        margin-bottom: 0;
+    }
+
+    .c-article {
+        width: 100%;
+        margin: 0 0 30px 0;
+    }
+
+    .a-list:last-child {
+        margin-bottom: 0;
+    }
+
+    .a-list:first-child > h1 {
+        margin-top: 0;
+    }
+
+    .c-comment {
+        width: 100%;
+        margin: 0;
+    }
+
+    .c-list:last-child {
+        margin-bottom: 10px;
+    }
+}
