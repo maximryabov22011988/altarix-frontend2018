@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by maximryabov22011988 (http://jsbin.com/golenag/105/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  height: 100%;
+  margin: 0;
+  font: normal 14px/1.2 Arial, sans-serif;
+  background-color: #ffffff;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  margin-bottom: 25px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field-group:first-child {
+  margin-right: 13px;
+}
+
+.field-group:nth-child(2) {
+  margin-right: 31px;
+}
+
+.field__label {
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.field {
+  display: inline-block;
+  width: 40px;
+  padding: 4px 4px 2px;
+  line-height: 36px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  text-align: center;
+  color: #757575;
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid #EEEEEE;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.field::-webkit-input-placeholder { color: #BDBDBD; }
+.field::-moz-placeholder          { color: #BDBDBD; }/* Firefox 19+ */
+.field:-moz-placeholder           { color: #BDBDBD; }/* Firefox 18- */
+.field:-ms-input-placeholder      { color: #BDBDBD; }
+
+.field:hover {
+  border-color: #E0E0E0;
+}
+
+.field-group:nth-child(2) .field {
+  width: 70px;
+}
+
+.btn {
+  flex-grow: 1;
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 24px 2px;
+  line-height: 36px;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  text-align: center;
+  color: #fff;
+  background-color: #1976D2;
+  border-radius: 96px;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #2196F3;
+}
+
+.calendar {
+  width: 387px;
+  border-collapse: collapse;
+  border: 1px solid #CFD8DC;
+}
+
+.calendar__day-week {
+  padding: 20px;
+  text-align: center;
+  color: #455A64;
+  background-color: #ECEFF1;
+  user-select: none;
+}
+
+.calendar__week:hover {
+  background-color: #f7f8f9;
+}
+
+.calendar__date {
+  box-sizing: border-box;
+  width: 57px;
+  height: 57px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #CFD8DC;
+  user-select: none;
+}
+
+.calendar__date:hover {
+  color: #fff;
+  background-color: #2196F3;
+}
+
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="field-group">
+      <label class="field__label" for="month">месяц</label>
+      <input class="field" id="month" type="text" required>
+    </div>
+    <div class="field-group">
+      <label class="field__label" for="year">год</label>
+      <input class="field" id="year" type="text" required>
+    </div>
+    <input class="btn" type="button" value="Показать календарь" onclick="openCalendar()">
+  </div>
+  <div class="container"></div>
+<script id="jsbin-javascript">
+/*
+
+Исходные данные:
+
+Календарь. Принимает год, месяц. Рисует таблицу переданного месяца.
+
+*/
+
+var daysWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+var formattedArray;
+
+
+// Проверяет значения и запускает создание массива, таблицы
+
+function openCalendar() {
+
+  var month = +document.querySelector('#month').value;
+  var year = +document.querySelector('#year').value;
+
+
+  if (!isNumeric(month) || !isNumeric(year) || typeof month === 'string' || typeof year === 'string' || month === '' || year === '') {
+
+    return alert('Вы ввели некорректный тип данных - NaN / undefined / null / Infinity / String');
+
+  } else if (month < 1 || month > 12) {
+
+    return alert('Введите значение от 1 до 12 (включительно)');
+
+  } else if (year < 1) {
+
+    return alert('Год введен не корректно');
+
+  }
+
+  function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
+  var table = document.getElementById('calendar');
+
+  if (table !== null) {
+    table.parentNode.removeChild(table);
+  }
+
+  formattedArray = createMultidimensionalArray(month, year);
+  createTable(formattedArray);
+}
+
+
+// Создает двумерный массив для заполнения таблицы
+
+function createMultidimensionalArray(month, year) {
+
+  var amountDaysInMonth = new Date(year, month, 0).getDate();
+
+  var indexFirstDayOfMonth = new Date(year, month - 1, 1).getDay();
+  indexFirstDayOfMonth = (indexFirstDayOfMonth === 0) ? 6 : indexFirstDayOfMonth -= 1;
+  var weekDayOfFirstDay = daysWeek[indexFirstDayOfMonth];
+
+  var multidimensionalArray = [];
+  var newStartIndex = daysWeek.indexOf(weekDayOfFirstDay);
+
+  for (var i = 0; i < 6; i++) {
+
+    multidimensionalArray[i] = [];
+
+    for (var j = 0; j < 7; j++) {
+
+      multidimensionalArray[i][j] = i * 7 + j - newStartIndex + 1;
+
+      if (multidimensionalArray[i][j] < 1) {
+
+        multidimensionalArray[i][j] = null;  // экономим память
+
+      } else if (multidimensionalArray[i][j] > amountDaysInMonth) {
+
+        multidimensionalArray[i][j] = null;  // экономим память
+
+      }
+
+    }
+
+  }
+
+  multidimensionalArray.unshift(daysWeek);
+
+  return multidimensionalArray;
+}
+
+
+// Создаёт таблицу и кладёт в .container
+
+function createTable(array) {
+
+  var calendarContainer = document.querySelector('.container');
+
+  var table = makeElement('table', 'calendar');
+  table.id = 'calendar';
+  var tableHead = makeElement('thead', 'calendar__header');
+  var tableHeadRow = makeElement('tr', 'calendar__header-wrapper');
+  var tableBody = makeElement('tbody', 'calendar__body');
+
+  for (var t = 0; t < array.length; t++) {
+
+    var tableRow = makeElement('tr', 'calendar__week');
+
+    for (var c = 0; c < array[t].length; c++) {
+
+      if (t === 0) {
+
+        var tableCellHead = makeElement('td', 'calendar__day-week');
+
+        tableCellHead.textContent = array[t][c];
+        tableHeadRow.appendChild(tableCellHead);
+
+        tableHead.appendChild(tableHeadRow);
+
+      } else {
+
+        var tableCell = makeElement('td', 'calendar__date');
+
+        tableCell.textContent = array[t][c];
+        tableRow.appendChild(tableCell);
+      }
+    }
+
+    tableBody.appendChild(tableRow);
+  }
+
+  table.appendChild(tableHead);
+  table.appendChild(tableBody);
+  calendarContainer.appendChild(table);
+}
+
+
+// Создает html теги и классы [ вспомогательная функция ]
+
+var makeElement = function(tagName, className) {
+  var element = document.createElement(tagName);
+  element.classList.add(className);
+
+  return element;
+};
+
+
+
+/*
+
+Исходные данные:
+
+Функция – калькулятор. Получает 3 аргумента: первый операнд,
+оператор (+, -, *, /), второй операнд. Если операнды не являются
+числами, функция выбрасывает исключение. Если передан неизвестный
+оператор – функция выбрасывает исключение. Возвращает результат операции.
+
+
+var firstNumber = 1.3;
+var secondNumber = 20;
+var operator = '*';
+
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function IncorrectOperator(message) {
+  this.message = message;
+  this.name = "IncorrectOperator";
+}
+
+function NotString(message) {
+  this.message = message;
+  this.name = "NotString";
+}
+
+function NotDivideZero(message) {
+  this.message = message;
+  this.name = "NotDivideZero";
+}
+
+function NotNumber(message) {
+  this.message = message;
+  this.name = "NotNumber";
+}
+
+
+function calc(firstOperand, operator, secondOperand) {
+
+  if ( typeof firstOperand === 'string' || typeof secondOperand === 'string' ) {
+
+    throw new NotString('Вы ввели неверный тип данных - string');
+
+  } else if ( operator === '/' && secondOperand === 0 ) {
+
+    throw new NotDivideZero('Деление на 0 невозможно!');
+
+  } else if ( !isNumeric(firstOperand) || !isNumeric(secondOperand) ) {
+
+    throw new NotNumber('Вы ввели некорректное значение (NaN / undefined / null / Infinity)');
+
+  }
+
+  switch (operator) {
+    case '+':
+      result = firstOperand + secondOperand;
+      break;
+    case '-':
+      result = firstOperand - secondOperand;
+      break;
+    case '*':
+      result = firstOperand * secondOperand;
+      break;
+    case '/':
+      result = firstOperand / secondOperand;
+      break;
+    default:
+      throw new IncorrectOperator( 'Я не знаю такого оператора - ' + operator + '.\n' + 'Возможные варианты: +, -, *, /. ' + 'Оператор должен быть в кавычках!' );
+  }
+
+  return result;
+}
+
+
+try {
+
+  calc(firstNumber, operator, secondNumber);
+
+} catch (e) {
+
+  console.log(e.name + ': ' + e.message);
+
+}
+
+
+console.log( calc(firstNumber, operator, secondNumber) );
+
+*/
+
+
+
+/*
+
+Исходные данные:
+
+Функция получает первым параметром массив, каждый элемент которого
+является строкой. Вторым параметром подстроку для поиска. Возвращает true,
+если хотя бы один элемент массива содержит переданную подстроку и false
+в противном случае. Поиск регистронезависимый.
+
+
+var wordArray = ['Мне', 'нравится', 'изучать', 'Javascript'];
+
+function searchWord(arr, searchedWord) {
+
+  for (var i = 0; i < arr.length; i++) {
+    if ( searchedWord.toLowerCase() === arr[i].toLowerCase() ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+console.log( searchWord(wordArray, 'НРАВИТСЯ') );
+
+*/
+
+
+
+/*
+
+Исходные данные:
+
+Функция получает число и возвращает строку с отформатированным
+значением вида «(-) 00 000 000,00». Разделитель разрядов – пробел,
+разделитель целой и дробной части - запятая. Количество знаков после
+запятой – от 0 до 2-х.
+
+
+var number = 5454350.5856;
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function formatsNumber(value) {
+
+  if (typeof value === 'string') {
+    value = +value;
+  }
+
+  if (isNumeric(value)) {
+
+    var valueInArr = value.toFixed(2).toString().split('');
+
+    var delimiter = valueInArr.indexOf('.');
+    valueInArr[delimiter] = ',';
+
+    var fractionalPartValue = valueInArr.splice(delimiter, 3);
+
+    if ( valueInArr.length >= 4 ) {
+      for (var i = valueInArr.length - 3; i > 0 ; i -= 3) {
+        valueInArr[i] = ' ' + valueInArr[i];
+      }
+    }
+
+    var formattedValue = valueInArr.join('') + fractionalPartValue.join('');
+
+    return formattedValue;
+  }
+
+  return 'Вы ввели некорректное значение';
+};
+
+console.log( formatsNumber(number) );
+
+*/
+</script>
+</body>
+</html>
