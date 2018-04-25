@@ -8,6 +8,8 @@
 gulpfile.js
 package.json
 package-lock.json
+webpack-template/dist/
+webpack-template/node_modules/
 materials/
 node_modules/
 npm-debug.*
