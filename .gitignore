@@ -5,10 +5,7 @@
 *.pdf
 *.psd
 *.sublime*
-gulpfile.js
 package-lock.json
-webpack-template/dist/
-webpack-template/node_modules/
 materials/
 node_modules/
 npm-debug.*
