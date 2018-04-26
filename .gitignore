@@ -7,6 +7,10 @@
 *.sublime*
 package-lock.json
 materials/
+my-app/build/
+my-app/public/
+my-app/node_modules/
 node_modules/
 npm-debug.*
 Thumbs.db
+
