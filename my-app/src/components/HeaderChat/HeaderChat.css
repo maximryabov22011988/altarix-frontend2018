@@ -1,0 +1,26 @@
+.chat__header {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 100%;
+  height: 80px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 2px solid #e9e9e9;
+  background-color: #f1f1f1;
+}
+
+.chat__user-name {
+  margin: 0;
+  padding-left: 48px;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 80px;
+  color: #434343;
+}
+
+@media (min-width: 320px) and (max-width: 600px) {
+  .chat__user-name {
+    padding-left: 0;
+    text-align: center;
+  }
+}

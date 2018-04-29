@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './SendMessageForm.css';
+
 
 class SendMessageForm extends Component {
   render() {

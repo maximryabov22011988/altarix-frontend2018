@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Chat from './Chat';
-import './global.css';
+import Chat from './components/Chat/Chat.js';
+import './global/global.css';
 
 
 ReactDOM.render(

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import HeaderChat from './ChatHeader';
-import ContentChat from './ChatContent';
-import SendMessageForm from './ChatSendMessageForm';
+import HeaderChat from '../HeaderChat/HeaderChat.js';
+import ContentChat from '../ContentChat/ContentChat.js';
+import SendMessageForm from '../SendMessageForm/SendMessageForm.js';
 
 import './Chat.css';
 
