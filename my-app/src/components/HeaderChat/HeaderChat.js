@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import './HeaderChat.css';
-
 
 class HeaderChat extends Component {
   render() {

@@ -7,5 +7,5 @@ import './global/global.css';
 
 ReactDOM.render(
   <Chat />,
-  document.querySelector('.chat')
+  document.getElementById('app')
 );

@@ -10,7 +10,7 @@ import './Chat.css';
 class Chat extends Component {
   render() {
     return (
-      <div className="chat__wrapper">
+      <div className="chat">
         <HeaderChat />
         <ContentChat />
         <SendMessageForm />
