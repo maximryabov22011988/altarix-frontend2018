@@ -7,14 +7,9 @@ class ContentChat extends Component {
   render() {
     return (
       <ul className="chat__messages">
-        <Message />
-        <Message />
-        <Message isOutgoing />
-        <Message />
-        <Message isOutgoing />
-        <Message />
-        <Message isOutgoing />
-        <Message isOutgoing />
+        {this.props.messages.map((message, i) => (
+          <Message key={i} {...message} />
+        ))}
       </ul>
     );
   }

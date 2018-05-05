@@ -8,12 +8,23 @@ import './Chat.css';
 
 
 class Chat extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { messages: [] };
+  }
+
+  addNewMessage = (message) => {
+    this.setState({
+      messages: [...this.state.messages, { id: Date.now(), name: 'Maxim Ryabov', message: message, isOutgoing: true }]
+    })
+  }
+
   render() {
     return (
       <div className="chat">
         <HeaderChat />
-        <ContentChat />
-        <SendMessageForm />
+        <ContentChat messages={this.state.messages} />
+        <SendMessageForm onMessageSend={this.addNewMessage}/>
       </div>
     );
   }
@@ -21,5 +32,3 @@ class Chat extends Component {
 
 
 export default Chat;
-
-
